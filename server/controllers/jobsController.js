@@ -109,7 +109,7 @@ module.exports = {
     },
     editJob: async (req, res) => {
         try {
-            const { id } = req.param
+            const { id } = req.params
             const { 
                 title,
                 description, 

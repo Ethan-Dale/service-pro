@@ -1,14 +1,18 @@
 require('dotenv').config()
 const express = require('express')
+const session = require('express-session')
 const cors = require('cors')
-const {SERVER_PORT} = process.env
+const {SERVER_PORT, SECRET} = process.env
 
 
 const {sequelize} = require('./util/database')
 const {User} = require('./models/user')
 const {Job} = require('./models/jobs')
 const {Payment} = require('./models/payments')
+const {savedJob} = require('./models/accepted')
 
+User.belongsToMany(Job, { through: 'SavedJob', foreignKey: 'userId' });
+Job.belongsToMany(User, { through: 'SavedJob', foreignKey: 'jobId' });
 User.hasMany(Job, { as: 'RequestedJobs', foreignKey: 'customerId' })
 User.hasMany(Job, { as: 'AssignedJobs', foreignKey: 'tradesmanId' })
 Job.belongsTo(User, { as: 'Customer', foreignKey: 'customerId' })
@@ -26,18 +30,26 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(session({
+    secret: SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie:{
+        maxAge: 1000 * 60
+    }
+}))
 
 app.post('/api/register', register)
 app.post('/api/login', login)
 
-app.get('/jobs/:userId', getAllJobs)
+app.get('/api/jobs/:userId', getAllJobs)
 
-app.get('/userJobs/:userId', getUserJobs)
-app.post('/jobs/add', addJob)
-app.post('/jobs/:id/accept', acceptJob)
-app.put('/jobs/:id/edit', editJob)
-app.delete('/jobs/:id/delete', deleteJob)
-app.post('/jobs/:id/payment', createPayment)
+app.get('/api/userJobs/:userId', getUserJobs)
+app.post('/api/jobs', addJob)
+app.post('/api/existing/jobs/:id', acceptJob)
+app.put('/api/jobs/:id', editJob)
+app.delete('/api/jobs/:id', deleteJob)
+app.post('/api/payment/:id', createPayment)
 
 sequelize.sync()
     .then(() => app.listen(SERVER_PORT, console.log(`server is up on ${SERVER_PORT}`)))
