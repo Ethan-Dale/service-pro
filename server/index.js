@@ -11,6 +11,7 @@ const {Job} = require('./models/jobs')
 const {Payment} = require('./models/payments')
 const {savedJob} = require('./models/accepted')
 
+
 User.belongsToMany(Job, { through: 'SavedJob', foreignKey: 'userId' });
 Job.belongsToMany(User, { through: 'SavedJob', foreignKey: 'jobId' });
 User.hasMany(Job, { as: 'RequestedJobs', foreignKey: 'customerId' })
@@ -20,8 +21,8 @@ Job.belongsTo(User, { as: 'Tradesman', foreignKey: 'tradesmanId' })
 Job.hasOne(Payment)
 Payment.belongsTo(Job)
 
-const {register} = require('./controllers/authController')
-const {login} = require('./controllers/authController')
+const {register, login, checkUser, logout} = require('./controllers/authController')
+
 
 const {getAllJobs, getUserJobs, addJob, acceptJob, editJob, deleteJob, createPayment} = require('./controllers/jobsController')
 
@@ -35,12 +36,14 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie:{
-        maxAge: 1000 * 60
+        maxAge: 1000 * 60 * 20
     }
 }))
 
 app.post('/api/register', register)
 app.post('/api/login', login)
+app.get('/api/user', checkUser)
+app.post('/api/logout', logout)
 
 app.get('/api/jobs/:userId', getAllJobs)
 

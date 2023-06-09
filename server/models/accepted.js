@@ -9,21 +9,6 @@ module.exports = {
             allowNull: false,
             primaryKey: true
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'user', 
-                key: 'id'
-            }
-        },
-        jobId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'jobs', 
-                key: 'id'
-            }
-        }
+        
     })
 }

@@ -2,7 +2,11 @@ import React from 'react'
 
 const JobForm = () => {
   return (
-    <div>JobForm</div>
+    <form className='jobForm'>
+      <input />
+      <input />
+      <input />
+    </form>
   )
 }
 

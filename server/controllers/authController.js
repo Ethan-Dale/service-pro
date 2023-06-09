@@ -23,10 +23,13 @@ module.exports ={
                     phoneNumber, 
                     userType
                 })
-                res.status(200).send({
+
+                req.session.user = {
                     userId: newUser.dataValues.id,
-                    userType
-                })
+                    userType: newUser.dataValues.userType
+                }
+
+                res.status(200).send(req.session.user)
             }
         } catch(theseHands){
             console.log(theseHands)
@@ -44,10 +47,12 @@ module.exports ={
                 const isAuthenticated = bcrypt.compareSync(password, foundUser.hashedPass)
 
                 if (isAuthenticated) {
-                    res.status(200).send({
+                    req.session.user = {
                         userId: foundUser.dataValues.id,
                         userType: foundUser.dataValues.userType
-                    })
+                    }
+    
+                    res.status(200).send(req.session.user)
                  } else {
                     res.status(400).send('Password is incorrect')
                 } 
@@ -59,4 +64,16 @@ module.exports ={
                 res.sendStatus(400)
         }
     },
+    checkUser: (req, res) =>{
+        console.log(req.session)
+        if(req.session.user){
+            res.status(200).send(req.session.user)
+        } else {
+            res.status(400).send('No user found')
+        }
+    },
+    logout: (req, res) => {
+        req.session.destroy()
+        res.sendStatus(200)
+    }
 }
