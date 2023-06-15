@@ -1,6 +1,38 @@
 .App {
   text-align: center;
 }
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #03045E;
+}
+
+.content {
+  flex: 1 0 auto;
+  transition: background-image 6s ease-in-out; /* You can adjust the time here */
+  background-image: linear-gradient(to bottom left, #caf0f8, #00B4D8);
+}
+
+.content-jobform {
+  background-image: linear-gradient(to bottom, #caf0f8, #00B4D8);
+  
+}
+
+.content-dashboard {
+  background-image: linear-gradient(to bottom left, #caf0f8, #00B4D8);
+}
+
+.content-profile {
+  background-image: linear-gradient(to bottom right, #caf0f8, #00B4D8);
+}
+
+
+
+
+footer {
+  flex-shrink: 0;
+}
 
 .App-logo {
   height: 40vmin;

@@ -17,7 +17,7 @@ export const AuthContextProvider = (props) => {
     axios
       .post("/api/logout")
       .then((res) => setUserId(null))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   };
   const contextValue = {
     userId,
@@ -28,7 +28,7 @@ export const AuthContextProvider = (props) => {
     axios
       .get("/api/user")
       .then((res) => setUserId(res.data.userId))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }, []);
   return (
     <AuthContext.Provider value={contextValue}>

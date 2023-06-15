@@ -49,7 +49,8 @@ module.exports ={
                 if (isAuthenticated) {
                     req.session.user = {
                         userId: foundUser.dataValues.id,
-                        userType: foundUser.dataValues.userType
+                        userType: foundUser.dataValues.userType,
+                        userAddress: foundUser.dataValues.address
                     }
     
                     res.status(200).send(req.session.user)

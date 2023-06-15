@@ -1,0 +1,68 @@
+#headerBar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #caf0f8;
+  position: absolute;
+  top: -100px; 
+  width: 100%;
+  transition: top 2s ease-in-out;
+}
+
+#headerBar.visible {
+  top: 0;
+}
+
+#navLinks {
+  margin-top: 25px;
+  position: relative;
+}
+#logo {
+  font-family: "Oxygen", sans-serif;
+  margin-top: 10px;
+  font-size: 50px;
+  text-align: center;
+}
+
+.links {
+  margin: 30px;
+  position: relative;
+}
+
+.icon-title {
+  display: none;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 3px;
+  z-index: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.links:hover .icon-title {
+  display: block;
+  font-family: "Oxygen", sans-serif;
+}
+.links:hover i {
+  transform: scale(1.3);
+  transition: 0.5s;
+}
+.headerItem {
+  width: 300px;
+}
+#logOutBtn {
+  background-color: none;
+  width: 50px;
+}
+#logOutBtn:hover {
+  transform: scale(1.3);
+}
+#logOutBox {
+  display: flex;
+  justify-content: flex-end;
+}
