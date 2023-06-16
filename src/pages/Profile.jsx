@@ -19,7 +19,7 @@ const Profile = () => {
         setUserId(response.data.userId);
         setUserType(response.data.userType);
         fetchSavedJobs(response.data.userId);
-        getUserPosts(response.data)
+        getUserPosts(response.data);
       })
       .catch((error) => {
         console.error("Error fetching userId:", error);
@@ -42,7 +42,6 @@ const Profile = () => {
       .get("/api/jobs")
       .then((response) => {
         UserPosts(response.data);
-       
       })
       .catch((error) => {
         console.error("error getting jobs", error);
@@ -62,39 +61,43 @@ const Profile = () => {
   };
 
   const userPosts = allJobs.filter((job) => job.customerId === userId);
-  console.log(userPosts)
+  console.log(userPosts);
 
   return (
     <main id="pageContainer">
-      <h2 className="pageTitle">Accepted Jobs</h2>
-      <div className="cardContainer">
-      {savedJobs.map((job, index) => (
-        <JobCard
-          key={index}
-          job={job}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onAccept={handleAccept}
-          userId={userId}
-          userType={userType}
-          isProfilePage={true}
-        />
-      ))}
+      {userType === "tradesman" && (
+        <div>
+          <h2 className="pageTitle">Accepted Jobs</h2>
+          <div className="cardContainer">
+            {savedJobs.map((job, index) => (
+              <JobCard
+                key={index}
+                job={job}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onAccept={handleAccept}
+                userId={userId}
+                userType={userType}
+                isProfilePage={true}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
-      </div>
-      <h2 className="pageTitle" >Your Posts</h2>
+      <h2 className="pageTitle">Your Posts</h2>
       <div className="cardContainer">
-      {userPosts.map((post, index) => (
-        <JobCard
-          key={index}
-          job={post}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          userId={userId}
-          userType={userType}
-          isProfilePage
-        />
-      ))}
+        {userPosts.map((post, index) => (
+          <JobCard
+            key={index}
+            job={post}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            userId={userId}
+            userType={userType}
+            isProfilePage
+          />
+        ))}
       </div>
     </main>
   );

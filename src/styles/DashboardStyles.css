@@ -60,6 +60,7 @@
     font-family: "Oxygen", sans-serif;
     font-size: 30px;
     margin-top: 10px;
+    text-align: center;
   }
   #jobDetails{
     display: flex;
